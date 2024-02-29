@@ -1,28 +1,30 @@
 import streamlit as st
 from googletrans import Translator
 
-# Function to translate text from English to Tamil
-def translate_to_tamil(text):
+# Function to translate text to the specified language
+def translate_text(text, dest_lang):
     translator = Translator()
-    translated_text = translator.translate(text, src='en', dest='ta').text
+    translated_text = translator.translate(text, dest=dest_lang).text
     return translated_text
 
 # Streamlit App
 def main():
-    st.title("English to Tamil Translator")
+    st.title("Language Translator")
+
     page = st.sidebar.selectbox("Select a page", ["Home", "Translation"])
 
     if page == "Home":
-        st.header("Welcome to English to Tamil Translator!")
-        st.write("This app translates English text to Tamil.")
-        st.image("pic.png", caption="Optional caption for the image", use_column_width=True)
+        st.header("Welcome to Language Translator!")
+        st.write("This app translates text from one language to another.")
 
     elif page == "Translation":
-        st.header("Translate English to Tamil")
-        input_text = st.text_area("Enter English text to translate:")
+        st.header("Translate Text")
+
+        input_text = st.text_area("Enter text to translate:")
+        dest_lang = st.selectbox("Select language to translate to:", ["Tamil", "French", "German", "Spanish", "Chinese (Simplified)"])
 
         if st.button("Translate"):
-            translated_text = translate_to_tamil(input_text)
+            translated_text = translate_text(input_text, dest_lang.lower())
             st.success("Translated Text:")
             st.write(translated_text)
 
